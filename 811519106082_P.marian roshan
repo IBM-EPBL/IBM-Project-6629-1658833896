@@ -1,0 +1,48 @@
+int Value;
+int sensorState = 0;
+int sensorValue = 0;
+
+void setup()
+{
+  pinMode(9, OUTPUT);
+  pinMode(A0, INPUT_PULLUP);
+  pinMode(A1, INPUT);
+  pinMode(9, OUTPUT);
+  pinMode(A3, INPUT);
+  pinMode(9, OUTPUT);
+  Serial.begin(9600);
+}
+void loop()
+{
+  Value = analogRead(A0);
+ Serial.println(Value);
+ delay(1000);
+   if(Value > 400)
+  {
+    analogWrite(9,1);
+      tone(9,1000);
+   	  delay(1000);
+      noTone(9);
+     }
+  else
+  {
+    analogWrite(9,0);
+    
+  }
+  {
+     sensorState = digitalRead(2);
+    if (sensorState == HIGH) {
+    digitalWrite(9, HIGH);
+    Serial.println("Sensor activated!");
+  } else {
+    digitalWrite(9, LOW);
+  }
+  delay(10);
+  }
+  {
+  sensorValue = analogRead(A3);
+  Serial.println(sensorValue);
+  analogWrite(9, map(sensorValue, 0, 1023, 0, 255));
+  delay(100);
+}
+}
